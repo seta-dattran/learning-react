@@ -1,10 +1,10 @@
 import React from 'react'
-import FilterLink from '../containers/FilterLink'
-import { VisibilityFilters } from '../actions'
-
+import FilterLink from '../containers/Todo/FilterLink'
+import { VisibilityFilters } from '../store/modules/Todo/constant'
+import {Typography} from '@material-ui/core'
 const Footer = () => (
   <div>
-    <span>Show: </span>
+    <Typography variant="body1">Show:</Typography>
     <FilterLink filter={VisibilityFilters.SHOW_ALL} >
       All
     </FilterLink>

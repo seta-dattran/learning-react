@@ -1,18 +1,23 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import {ListItem, ListItemText,Checkbox, ListItemIcon} from '@material-ui/core'
+
 
 const Todo = ({ onClick, completed, text, isSelected }) => (
-  <div >
-    <li      
-      onClick={onClick}
-      style={{
-        textDecoration: completed ? 'line-through' : 'none',
-        color: isSelected ? 'green' : 'black'
-      }}
-    >
-      {text}    
-    </li>    
-  </div >
+  
+  <ListItem
+    button
+    selected={isSelected}
+    onClick={onClick}         
+  >
+    <ListItemIcon>
+      <Checkbox
+        edge="start"                        
+        checked={isSelected}        
+      />
+    </ListItemIcon>
+    <ListItemText primary={text} style={completed ? {color: 'green'} : undefined}/>    
+  </ListItem>
 )
 
 Todo.propTypes = {

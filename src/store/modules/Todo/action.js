@@ -1,33 +1,44 @@
-let nextTodoId = 0
+
+
 export const addTodo = text => ({
   type: 'ADD_TODO',
-  id: nextTodoId++,
-  text
+  payload: {
+    text
+  }
 })
 
-export const delTodo = id => ({
+export const delTodo = ids => ({
   type: 'DEL_TODO',
-  id
+  payload: {
+    ids
+  }
 })
 
 export const editTodo = (id, text) => ({
   type: 'EDIT_TODO',
-  text,
-  id
+  payload: {
+    text,
+    id
+  }
 })
 
 export const setVisibilityFilter = filter => ({
   type: 'SET_VISIBILITY_FILTER',
-  filter
+  payload: {
+    filter
+  }
 })
 
 export const selectTodo = id => ({
   type: 'SELECT_TODO',
-  id
+  payload: {
+    id
+  }
 })
 
-export const VisibilityFilters = {
-  SHOW_ALL: 'SHOW_ALL',
-  SHOW_COMPLETED: 'SHOW_COMPLETED',
-  SHOW_ACTIVE: 'SHOW_ACTIVE'
-}
+export const markDoneTodo = ids => ({
+  type: 'MARK_AS_DONE',
+  payload: {
+    ids
+  }
+})
