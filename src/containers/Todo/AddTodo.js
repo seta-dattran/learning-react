@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { addTodo } from '../../store/modules/Todo/action'
+import { addTodo, fetchData } from '../../store/modules/Todo/action'
 import {TextField, Button} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles';
 
@@ -17,6 +17,12 @@ const AddTodo = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [value, setValue] = React.useState('');
+
+  const handleFetchData =  (e) => {
+    e.preventDefault();
+    dispatch(fetchData());
+  }
+
   const onChangeInput = React.useCallback((e) => {
     setValue(e.target.value);
   }, []);
@@ -43,6 +49,7 @@ const AddTodo = () => {
           className={classes.btnAdd}
           type="submit" variant="contained" color="primary">Add to do</Button>
       </form>
+      <Button onClick={handleFetchData} className={classes.btnAdd} variant="contained" color="primary" >Fetch data</Button>
     </div>
   )
 };

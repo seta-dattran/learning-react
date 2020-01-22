@@ -15,3 +15,7 @@ export {
     todoSelector,
     filterSelector
 } from './selector';
+
+export {
+    todoSaga
+} from './sagas'

@@ -5,6 +5,8 @@ const allId = state => state[nameSpace].allId;
 const byId = state => state[nameSpace].byId;
 const visibilityFilterType = state => state[nameSpace].visibleFilter;
 const selectedTodos = state => state[nameSpace].selected;
+const isLoading = state => state[nameSpace].isLoading;
+const err = state => state[nameSpace].err;
 
 const getVisibleTodos = (todos, filter) => {
   switch (filter) {
@@ -24,10 +26,17 @@ export const todoSelector = createSelector(
   byId,
   visibilityFilterType,
   selectedTodos,
-  (byId, visibilityFilter, selectedTodos) => ({
-    todos: getVisibleTodos(Object.values(byId), visibilityFilter),
-    selectedTodos
-  })
+  isLoading,
+  err,
+  (byId, visibilityFilter, selectedTodos, isLoading, err) => {    
+    
+    return  ({
+      todos: getVisibleTodos(Object.values(byId), visibilityFilter),
+      selectedTodos,
+      isLoading,
+      err
+    })
+  }
 );
 /*select filter from state*/
 export const filterSelector = createSelector(

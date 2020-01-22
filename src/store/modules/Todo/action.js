@@ -42,3 +42,22 @@ export const markDoneTodo = ids => ({
     ids
   }
 })
+
+export const fetchData = () => ({
+  type: 'FETCH_DATA_BEGIN'
+})
+
+export const fetchDataSuccess = (todos) => ({
+  type: 'FETCH_DATA_SUCCESS',
+  payload: {
+    todos
+  }
+})
+
+export const fetchDataFail = (message) => ({
+  type: 'FETCH_DATA_FAIL',
+  payload: {
+    message
+  }
+})
+

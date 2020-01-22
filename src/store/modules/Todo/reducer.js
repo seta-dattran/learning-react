@@ -8,7 +8,9 @@ const initialState = {
   allId: [],
   byId: {},
   selected: [],
-  visibleFilter: VisibilityFilters.SHOW_ALL
+  visibleFilter: VisibilityFilters.SHOW_ALL,
+  isLoading: false,
+  err: ''
 }
 
 const todos = (state = initialState, action) => {
@@ -47,8 +49,7 @@ const todos = (state = initialState, action) => {
           ...state.byId[delId],           
           completed: true
         }
-        }),{...state.byId}
-      )
+      }),state.byId)
 
       return {
         ...state,
@@ -67,10 +68,6 @@ const todos = (state = initialState, action) => {
           return (e !== selectedId);
         } )
       }
-              
-      // console.log(selectedId);
-      // console.log(idx);
-      // console.log(newSelectedArr);
       
       return {
         ...state,
@@ -83,6 +80,38 @@ const todos = (state = initialState, action) => {
         visibleFilter: VisibilityFilters[filter]
       }
     }
+    case "FETCH_DATA_BEGIN": {
+      return {
+        ...state,
+        isLoading: true
+      }
+    }
+    case "FETCH_DATA_SUCCESS": {      
+      
+      return {
+        ...state,
+        isLoading: false,
+        byId: action.payload.todos.reduce((acc, todo)  => ({
+          ...acc,
+          [todo.id]: {
+            id: todo.id,
+            text: todo.title,
+            completed: todo.completed            
+          }
+        }), {
+          ...state.byId
+        }),
+        allId: action.payload.todos.reduce((acc, todo) => [...acc, todo.id],state.allId)
+      }
+    }
+    case "FETCH_DATA_FAIL": {
+      return {
+        ...state,
+        isLoading: false,
+        err: action.payload.message
+      }
+    }     
+
     default:
       return state;
   }
