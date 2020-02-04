@@ -7,6 +7,7 @@ const visibilityFilterType = state => state[nameSpace].visibleFilter;
 const selectedTodos = state => state[nameSpace].selected;
 const isLoading = state => state[nameSpace].isLoading;
 const err = state => state[nameSpace].err;
+const currentUser = state => state[nameSpace].currentUser;
 
 const getVisibleTodos = (todos, filter) => {
   switch (filter) {
@@ -28,10 +29,13 @@ export const todoSelector = createSelector(
   selectedTodos,
   isLoading,
   err,
-  (byId, visibilityFilter, selectedTodos, isLoading, err) => {    
+  currentUser,
+  (byId, visibilityFilter, selectedTodos, isLoading, err, currentUser) => {    
+    console.log(currentUser);
     
     return  ({
-      todos: getVisibleTodos(Object.values(byId), visibilityFilter),
+      todos: getVisibleTodos(Object.values(byId).filter(todo => todo.owner === currentUser)      
+      , visibilityFilter),
       selectedTodos,
       isLoading,
       err

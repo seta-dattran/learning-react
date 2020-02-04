@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux'
-// import todoReducer from './modules/Todo/reducers'
 import { nameSpace as todoNameSpace, todos } from './modules/Todo';
-const rootReducer = combineReducers({
-    [todoNameSpace]: todos
-})
+import { nameSpace as userNameSpace, users} from './modules/User';
 
-export  default rootReducer;
+export  default extraReducers => combineReducers({
+    [todoNameSpace]: todos,
+    [userNameSpace]: users,
+    ...extraReducers
+})

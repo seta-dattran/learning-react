@@ -1,5 +1,5 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addTodo, fetchData } from '../../store/modules/Todo/action'
 import {TextField, Button} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles';
@@ -13,7 +13,10 @@ const useStyles = makeStyles(theme => ({
     marginLeft: theme.spacing(1),
   }
 }))
-const AddTodo = () => {  
+const AddTodo = () => {
+  
+  const currentUser = useSelector(state => state.todoReducer.currentUser);
+  
   const classes = useStyles();
   const dispatch = useDispatch();
   const [value, setValue] = React.useState('');
@@ -31,7 +34,7 @@ const AddTodo = () => {
     if (!value.trim()) {
       return
     }
-    dispatch(addTodo(value));
+    dispatch(addTodo(value, currentUser));
     setValue('');
   }, [value, dispatch]);
 
@@ -39,7 +42,7 @@ const AddTodo = () => {
     <div>
       <form onSubmit={onSubmit}>        
         <TextField 
-          onChange={onChangeInput} 
+          onChange={onChangeInput}
           value={value} 
           label="Type here" 
           variant="outlined" 

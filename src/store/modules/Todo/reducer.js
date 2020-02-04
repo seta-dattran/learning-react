@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import { uuidv4 } from './utils';
 import { VisibilityFilters } from './constant';
+import * as actions from './action'
 
 const nameSpace = "todoReducer";
 
@@ -10,12 +11,13 @@ const initialState = {
   selected: [],
   visibleFilter: VisibilityFilters.SHOW_ALL,
   isLoading: false,
-  err: ''
+  err: '',
+  currentUser: ''
 }
 
 const todos = (state = initialState, action) => {
   switch (action.type) {
-    case "ADD_TODO":
+    case actions.ADD_TODO:
       const id = uuidv4();
       return {
         ...state,
@@ -25,11 +27,12 @@ const todos = (state = initialState, action) => {
           [id]: {
             id, 
             text: action.payload.text,
-            completed: false
+            completed: false,
+            owner: action.payload.username
           }
         }
       };
-    case "DEL_TODO":
+    case actions.DEL_TODO:
       const { ids: delIds } = action.payload;
       console.log(delIds);
       
@@ -41,7 +44,7 @@ const todos = (state = initialState, action) => {
         byId: _.omit(state.byId, delIds),
         selected: []
       }
-    case "MARK_AS_DONE":
+    case actions.MARK_AS_DONE:
       const { ids: doneIds } = action.payload;
       const newById = doneIds.reduce((acc, delId)  => ({
         ...acc,
@@ -56,7 +59,7 @@ const todos = (state = initialState, action) => {
         byId:  newById,
         selected: []
       }
-    case "SELECT_TODO": 
+    case actions.SELECT_TODO: 
       const { id: selectedId } = action.payload;          
       const idx  = _.indexOf(state.selected, selectedId) ;
       let newSelectedArr = [];
@@ -73,20 +76,20 @@ const todos = (state = initialState, action) => {
         ...state,
         selected: newSelectedArr
       }
-    case "SET_VISIBILITY_FILTER": {
+    case actions.SET_VISIBILITY_FILTER: {
       const { filter } = action.payload;
       return {
         ...state,
         visibleFilter: VisibilityFilters[filter]
       }
     }
-    case "FETCH_DATA_BEGIN": {
+    case actions.FETCH_DATA_BEGIN: {
       return {
         ...state,
         isLoading: true
       }
     }
-    case "FETCH_DATA_SUCCESS": {      
+    case actions.FETCH_DATA_SUCCESS: {      
       
       return {
         ...state,
@@ -104,14 +107,18 @@ const todos = (state = initialState, action) => {
         allId: action.payload.todos.reduce((acc, todo) => [...acc, todo.id],state.allId)
       }
     }
-    case "FETCH_DATA_FAIL": {
+    case actions.FETCH_DATA_FAIL: {
       return {
         ...state,
         isLoading: false,
         err: action.payload.message
       }
     }     
-
+    case actions.SEL_USER:
+      return {
+          ...state,
+          currentUser: action.payload.username
+      }
     default:
       return state;
   }

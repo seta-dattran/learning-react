@@ -1,7 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {selectTodo, markDoneTodo, delTodo } from '../../store/modules/Todo/action'
-
 import TodoList from '../../components/TodoList'
 import {todoSelector} from '../../store/modules/Todo/index'
 
@@ -18,7 +17,7 @@ const VisibleTodoList = () => {
   }   
   return (
     <div>
-      <TodoList todos={todos} isLoading={isLoading} err={err} selectedTo  dos={selectedTodos} {...todoDispatch}/>
+      <TodoList todos={todos} isLoading={isLoading} err={err} selectedTodos={selectedTodos} {...todoDispatch}/>
     </div>
   )
 }

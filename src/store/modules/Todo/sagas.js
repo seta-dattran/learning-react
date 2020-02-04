@@ -2,8 +2,7 @@ import { call, put, takeEvery, takeLatest } from 'redux-saga/effects'
 import {fetchData,fetchDataSuccess, fetchDataFail } from './action'
 
 // worker Saga: will be fired on USER_FETCH_REQUESTED actions
-function* workerSaga() {
-        
+function* workerSaga() {        
     try {
         const todos = yield call(fetchPosts);                           
         console.log(todos);        
@@ -16,7 +15,7 @@ function* workerSaga() {
 }
 
 function fetchPosts() { 
-    return fetch('https://jsonplaceholder.typicode.comm')
+    return fetch('https://jsonplaceholder.typicode.com/todos')
     .then(res => res.json())
     
 }
