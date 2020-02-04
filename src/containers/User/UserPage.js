@@ -1,9 +1,10 @@
 import React, {useState} from 'react'
-import {TextField, Button, List, ListItem, ListItemText} from '@material-ui/core'
+import {TextField, Button} from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux'
 import {addUser} from '../../store/modules/User'
 import Link from 'redux-first-router-link'
 import { makeStyles } from '@material-ui/core/styles';
+import UserList from '../../components/UserList'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -44,14 +45,7 @@ const UserPage = () => {
                 <Button color="primary" type="submit" variant="contained">Add user</Button>
                 <br></br>
                 <br></br>
-                <List>
-                    {allUsername.map(username => 
-                        (<ListItem >
-                            <ListItemText primary={username} /> 
-                        </ListItem>)
-                    
-                    )}
-                </List>
+                <UserList users={allUsername} />
                 <Link to={`/todos`} >
                     All todos                    
                 </Link>

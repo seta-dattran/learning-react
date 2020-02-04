@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import Footer from '../../components/Footer'
 import AddTodo from './AddTodo'
 import VisibleTodoList from './VisibleTodoList'
@@ -8,6 +8,7 @@ import { Autocomplete} from '@material-ui/lab'
 import { useSelector, useDispatch} from 'react-redux'
 import {selUser} from '../../store/modules/User'
 import { makeStyles } from '@material-ui/core/styles';
+
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
@@ -26,6 +27,11 @@ const TodoPage = () => {
   const allUsername = useSelector(state => state.userReducer.allName);
   const classes = useStyles();
   const dispatch = useDispatch();
+  
+  // set default user
+  useEffect(() => {
+    dispatch(selUser(allUsername[0]))    
+  }, [])
 
   const onChange = (e, value) => {    
     dispatch(selUser(value));    
@@ -40,7 +46,7 @@ const TodoPage = () => {
         options={allUsername}                
         style={{ width: 300 }}
         renderInput={params => (
-            <TextField {...params} label="User name" variant="outlined" fullWidth />
+          <TextField {...params} label="User name" variant="outlined" fullWidth />
         )}
       />
       <br></br>      
