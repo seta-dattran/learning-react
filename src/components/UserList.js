@@ -1,13 +1,15 @@
 import React from 'react'
 import {List, ListItem, ListItemText} from '@material-ui/core'
-
+import Link from 'redux-first-router-link'
 const UserList = ({users}) => {
     return (
         <div>
             <List>
                 {users.map(username => 
                     (<ListItem >
-                        <ListItemText primary={username} /> 
+                        <ListItem component={Link} button href={`/user/${username}`} >
+                            <ListItemText primary={username} />
+                        </ListItem>
                     </ListItem>)
                 )}
             </List>

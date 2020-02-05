@@ -1,4 +1,5 @@
 export const ADD_TODO = 'ADD_TODO';
+export const ADD_TODO_WITH_ID = 'ADD_TODO_WITH_ID';
 export const DEL_TODO = 'DEL_TODO';
 export const EDIT_TODO = 'EDIT_TODO';
 export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER';
@@ -12,11 +13,21 @@ export {
   selUser
 }
 from '../User'
+
 export const addTodo = (text, username) => ({
   type: ADD_TODO,
   payload: {
     text,
     username
+  }
+})
+
+export const addTodoWithId = (text, username, postId) => ({
+  type: ADD_TODO_WITH_ID,
+  payload: {
+    text,
+    username,
+    postId
   }
 })
 

@@ -1,5 +1,6 @@
 import { call, put, takeEvery, takeLatest } from 'redux-saga/effects'
-import {fetchData,fetchDataSuccess, fetchDataFail } from './action'
+import {fetchData,fetchDataSuccess, fetchDataFail, ADD_TODO, addTodoWithId } from './action'
+import {uuidv4} from './utils'
 
 // worker Saga: will be fired on USER_FETCH_REQUESTED actions
 function* workerSaga() {        
@@ -19,6 +20,13 @@ function fetchPosts() {
     .then(res => res.json())
     
 }
+
+function* createTodo(action) {
+    const id = uuidv4();            
+    yield put(addTodoWithId(action.payload.text, action.payload.username, id))      
+}
+
 export function* todoSaga() {
     yield takeEvery('FETCH_DATA_BEGIN', workerSaga);
+    yield takeEvery(ADD_TODO, createTodo);
 }

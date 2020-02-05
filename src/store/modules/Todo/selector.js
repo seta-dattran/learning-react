@@ -1,13 +1,19 @@
 import { createSelector } from "reselect";
 import { VisibilityFilters } from "./constant";
-import { nameSpace } from "./reducer";
-const allId = state => state[nameSpace].allId;
-const byId = state => state[nameSpace].byId;
-const visibilityFilterType = state => state[nameSpace].visibleFilter;
-const selectedTodos = state => state[nameSpace].selected;
-const isLoading = state => state[nameSpace].isLoading;
-const err = state => state[nameSpace].err;
-const currentUser = state => state[nameSpace].currentUser;
+import { nameSpace as todoNameSpace } from "./reducer";
+import { nameSpace as userNameSpace } from '../User';
+import _ from 'lodash';
+
+
+const allId = state => state[todoNameSpace].allId;
+const byId = state => state[todoNameSpace].byId;
+const visibilityFilterType = state => state[todoNameSpace].visibleFilter;
+const selectedTodos = state => state[todoNameSpace].selected;
+const isLoading = state => state[todoNameSpace].isLoading;
+const err = state => state[todoNameSpace].err;
+const currentUser = state => state[todoNameSpace].currentUser;
+
+const users  = state => state[userNameSpace];
 
 const getVisibleTodos = (todos, filter) => {
   switch (filter) {
@@ -30,18 +36,30 @@ export const todoSelector = createSelector(
   isLoading,
   err,
   currentUser,
-  (byId, visibilityFilter, selectedTodos, isLoading, err, currentUser) => {    
-    console.log(currentUser);
-    
-    return  ({
-      todos: getVisibleTodos(Object.values(byId).filter(todo => todo.owner === currentUser)      
-      , visibilityFilter),
-      selectedTodos,
-      isLoading,
-      err
-    })
+  users,
+  (byId, visibilityFilter, selectedTodos, isLoading, err, currentUser , users) => {            
+    if(_.isEmpty(users.allName)){            
+      return {
+        todos: [],
+        selectedTodos,
+        isLoading,
+        err
+      }
+    }
+    else {
+      currentUser = _.isEmpty(currentUser) ? users.allName[0] : currentUser;   
+      const todoListByName =  users.byName[currentUser].todos.map(todoId => byId[todoId]);    
+      
+      return  ({
+        todos: getVisibleTodos(todoListByName, visibilityFilter),
+        selectedTodos,
+        isLoading,
+        err
+      })
+    }    
   }
 );
+
 /*select filter from state*/
 export const filterSelector = createSelector(
   state => state.visibilityFilter,

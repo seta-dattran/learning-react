@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import { uuidv4 } from './utils';
 import { VisibilityFilters } from './constant';
 import * as actions from './action'
 
@@ -17,8 +16,8 @@ const initialState = {
 
 const todos = (state = initialState, action) => {
   switch (action.type) {
-    case actions.ADD_TODO:
-      const id = uuidv4();
+    case actions.ADD_TODO_WITH_ID:
+      const id = action.payload.postId;      
       return {
         ...state,
         allId: [...state.allId, id],
@@ -27,15 +26,12 @@ const todos = (state = initialState, action) => {
           [id]: {
             id, 
             text: action.payload.text,
-            completed: false,
-            owner: action.payload.username
+            completed: false,            
           }
         }
       };
     case actions.DEL_TODO:
-      const { ids: delIds } = action.payload;
-      console.log(delIds);
-      
+      const { ids: delIds } = action.payload;      
       return {
         ...state,
         allId: _.filter(state.allId, (e) => {

@@ -5,8 +5,7 @@ import TodoList from '../../components/TodoList'
 import {todoSelector} from '../../store/modules/Todo/index'
 
 const VisibleTodoList = () => { 
-  const a = useSelector(todoSelector);  
-  const {todos, selectedTodos, isLoading,err} = a;
+  const {todos, selectedTodos, isLoading,err}  = useSelector(todoSelector);    
   const dispatch = useDispatch();  
   
   /*dispatch*/

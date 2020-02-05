@@ -1,29 +1,47 @@
 import * as actions from './action'
-import {uuidv4} from './utils'
-
+import {ADD_TODO_WITH_ID} from '../Todo/action'
+import {isEmpty} from 'lodash'
 const nameSpace = "userReducer";
 
 const initState = {
-    allId: [],
-    byId: {
-        id: {
-            username: 'test',
-            todos: [1,2,3]
-        }
-    }
-
+    allName: [],
+    byName: {}
 }
 
 const users  = (state = initState , action ) => {
-    const id = uuidv4();
 
     switch(action.type){
         case actions.ADD_USER:            
             
             return {
                 ...state,
-                allName: [...state.allName, action.payload.username]
+                allName: [...state.allName, action.payload.username],
+                byName: {
+                    ...state.byName,
+                    [action.payload.username]: {
+                        username: action.payload.username,
+                        todos: []
+                    }
+                }
             }
+        case ADD_TODO_WITH_ID:            
+            const username = action.payload.username;
+            if (isEmpty(username)){
+                return state
+            }
+            else {
+                return {
+                    ...state,
+                    byName: {
+                        ...state.byName,
+                        [username]: {
+                            ...state.byName.username,
+                            todos: [...state.byName[username].todos, action.payload.postId ]
+                        }
+                    }
+                }
+            }                        
+            
         default: 
             return state;
     }

@@ -1,7 +1,11 @@
 export default  {
-    USER: {
+    USERS: {
         path: '/users',
         component: 'UserPage'
+    },
+    USER: {
+        path: '/user/:username',
+        component: 'User'
     },
     TODO: {
         path: '/todos',
@@ -12,4 +16,4 @@ export default  {
         component: 'HomePage'
     }
 }
-  
+ 
