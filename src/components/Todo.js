@@ -16,7 +16,7 @@ const Todo = ({ onClick, completed, text, isSelected }) => (
         checked={isSelected}        
       />
     </ListItemIcon>
-    <ListItemText primary={text} style={completed ? {color: 'green'} : undefined}/>    
+    <ListItemText primary={text} style={completed ? {color: 'green'} : null}/>    
   </ListItem>
 )
 

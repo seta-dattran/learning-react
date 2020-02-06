@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addTodo, fetchData } from '../../store/modules/Todo/action'
 import {TextField, Button} from '@material-ui/core'
-import {makeStyles} from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -13,9 +13,9 @@ const useStyles = makeStyles(theme => ({
     marginLeft: theme.spacing(1),
   }
 }))
-const AddTodo = () => {
+const UserAddTodo = () => {
   
-  const currentUser = useSelector(state => state.todoReducer.currentUser);
+  const currentUser = useSelector(state => state.location.payload.username);
   
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -34,6 +34,8 @@ const AddTodo = () => {
     if (!value.trim()) {
       return
     }
+    console.log(currentUser);
+    
     dispatch(addTodo(value, currentUser));
     setValue('');
   }, [value, dispatch]);
@@ -57,5 +59,5 @@ const AddTodo = () => {
   )
 };
 
-export default AddTodo;
+export default UserAddTodo;
 

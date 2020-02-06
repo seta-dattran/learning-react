@@ -1,17 +1,16 @@
 import React, {useEffect} from 'react'
-import Footer from '../../components/Footer'
-import AddTodo from './AddTodo'
-import VisibleTodoList from './VisibleTodoList'
 import {Typography} from '@material-ui/core'
 import {TextField} from '@material-ui/core'
 import { Autocomplete} from '@material-ui/lab'
 import { useSelector, useDispatch} from 'react-redux'
 import {selUser} from '../../store/modules/User'
 import Link from 'redux-first-router-link'
-
+import TodoListByUser from './TodoListByUser'
+import {todoSelector} from '../../store/modules/Todo'
 
 const TodoPage = () => {
-  const allUsername = useSelector(state => state.userReducer.allName);
+  const {allUsername,selectedUser, todos} = useSelector(todoSelector);
+  
   const dispatch = useDispatch();
   
   // set default user
@@ -35,10 +34,7 @@ const TodoPage = () => {
         )}
       />
       <br></br>      
-      <AddTodo />
-      <VisibleTodoList />
-      <Footer />
-      <br></br>
+      <TodoListByUser todos={todos} />
       <Link to='/users' >All users</Link>      
     </div>
   );

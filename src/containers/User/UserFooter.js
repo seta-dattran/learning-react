@@ -1,8 +1,9 @@
 import React from 'react'
-import FilterLink from '../containers/Todo/FilterLink'
-import { VisibilityFilters } from '../store/modules/Todo/constant'
+import FilterLink from './UserFilterLink'
+import { VisibilityFilters } from '../../store/modules/Todo/constant'
 import {Typography} from '@material-ui/core'
-const Footer = () => (
+
+const UserFooter = () => (
   <div>
     <Typography variant="body1">Show:</Typography>
     <FilterLink filter={VisibilityFilters.SHOW_ALL} >
@@ -17,4 +18,4 @@ const Footer = () => (
   </div>
 )
 
-export default Footer
+export default UserFooter

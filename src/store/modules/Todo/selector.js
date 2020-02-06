@@ -11,11 +11,46 @@ const visibilityFilterType = state => state[todoNameSpace].visibleFilter;
 const selectedTodos = state => state[todoNameSpace].selected;
 const isLoading = state => state[todoNameSpace].isLoading;
 const err = state => state[todoNameSpace].err;
-const currentUser = state => state[todoNameSpace].currentUser;
-
+const currentUser = state => state[todoNameSpace].currentUser ;
 const users  = state => state[userNameSpace];
 
-const getVisibleTodos = (todos, filter) => {
+/*select todos from state*/
+export const todoSelector = createSelector(
+  byId,
+  visibilityFilterType,
+  selectedTodos,
+  isLoading,
+  err,
+  currentUser,
+  users,
+  (byId, visibilityFilter, selectedTodos, isLoading, err, selectedUser , users) => {            
+    if(_.isEmpty(users.allName)){            
+      return {
+        todos: [],
+        selectedTodos: [],
+        isLoading: '',
+        err: '',
+        selectedUser: '',
+        allUsername: []
+      }
+    }
+    else {
+      selectedUser = _.isEmpty(selectedUser) ? users.allName[0] : selectedUser;   
+      const todoListByName =  users.byName[selectedUser].todos.map(todoId => byId[todoId]);          
+      
+      return  ({
+        todos: getVisibleTodos(todoListByName, visibilityFilter),
+        selectedTodos,
+        isLoading,
+        err,
+        selectedUser,
+        allUsername: users.allName
+      })
+    }    
+  }
+);
+
+export const getVisibleTodos = (todos, filter) => {
   switch (filter) {
     case VisibilityFilters.SHOW_ALL:
       return todos;
@@ -27,38 +62,6 @@ const getVisibleTodos = (todos, filter) => {
       throw new Error("Unknown filter: " + filter);
   }
 };
-
-/*select todos from state*/
-export const todoSelector = createSelector(
-  byId,
-  visibilityFilterType,
-  selectedTodos,
-  isLoading,
-  err,
-  currentUser,
-  users,
-  (byId, visibilityFilter, selectedTodos, isLoading, err, currentUser , users) => {            
-    if(_.isEmpty(users.allName)){            
-      return {
-        todos: [],
-        selectedTodos,
-        isLoading,
-        err
-      }
-    }
-    else {
-      currentUser = _.isEmpty(currentUser) ? users.allName[0] : currentUser;   
-      const todoListByName =  users.byName[currentUser].todos.map(todoId => byId[todoId]);    
-      
-      return  ({
-        todos: getVisibleTodos(todoListByName, visibilityFilter),
-        selectedTodos,
-        isLoading,
-        err
-      })
-    }    
-  }
-);
 
 /*select filter from state*/
 export const filterSelector = createSelector(

@@ -5,15 +5,14 @@ import {List, IconButton, Typography} from '@material-ui/core';
 import {DeleteRounded, DoneRounded} from '@material-ui/icons';
 
 import _ from 'lodash';
-const TodoList = ({ todos, selectTodo, delTodo, markDoneTodo, selectedTodos, isLoading, err }) => {    
-  
+const TodoList = ({ todos, selectTodo, delTodo, markDoneTodo, selectedTodos, username, isLoading, err }) => {      
   return (
     <>    
     <List>      
       <IconButton onClick={() => markDoneTodo(selectedTodos)}>
         <DoneRounded ></DoneRounded>
       </IconButton>
-      <IconButton onClick={() => delTodo(selectedTodos)}>
+      <IconButton onClick={() => delTodo(selectedTodos, username)}>
         <DeleteRounded ></DeleteRounded>
       </IconButton>
       <Typography variant="body1">{isLoading ? 'Loading data...' : null}</Typography>
