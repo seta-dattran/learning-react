@@ -4,7 +4,7 @@ export default  {
         component: 'UserPage'
     },
     USER: {
-        path: '/user/:username',
+        path: '/user/:username/:filter?',        
         component: 'User'
     },
     TODO: {
