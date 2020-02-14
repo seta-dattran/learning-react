@@ -8,6 +8,7 @@ import TodoPage from '../containers/Todo/TodoPage';
 import NotFound from './NotFound';
 import HomePage from './HomePage';
 import { makeStyles } from '@material-ui/core/styles';
+import GroupManagement from './GroupManagement';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -34,11 +35,11 @@ const pages =  {
 const App = () => {
     const classes = useStyles();
 
-    const location = useSelector(state => state.location);    
+    //const location = useSelector(state => state.location);    
     return (
         <div className={classes.root}>            
             <div className={classes.app}>
-                {pages[location.type]}
+                <GroupManagement />
             </div>
         </div>
     )
