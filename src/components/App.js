@@ -8,7 +8,7 @@ import TodoPage from '../containers/Todo/TodoPage';
 import NotFound from './NotFound';
 import HomePage from './HomePage';
 import { makeStyles } from '@material-ui/core/styles';
-import GroupManagement from './GroupManagement';
+import GroupManagement from './GroupManagement/GroupManagement';
 
 const useStyles = makeStyles(theme => ({
     root: {
