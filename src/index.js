@@ -6,7 +6,6 @@ import store from './store/index'
 
 
 
-
 render(
   <Provider store={store}>
     <App />
